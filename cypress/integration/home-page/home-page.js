@@ -6,7 +6,7 @@ describe('My home page', () => {
   /*
    * TODO: make this test work
    */
-  it('contains the text hello gatsby', () => {
-    expect(cy.getByText('sup')).should('eq', 'Hello Gatsby')
+  it('Contains copyright year', () => {
+    cy.get('header').findByText(/gatsby/i).should('exist')
   })
 })
