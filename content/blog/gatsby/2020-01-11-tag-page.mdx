@@ -1,0 +1,169 @@
+---
+title: Adding tags and category pages to your Gatsby site
+date: 2020-01-11
+description: >-
+  Add dynamic pages for tags or categories on your GatsbyJs blog
+readMore: Learn more
+tags:
+  - gatsbyjs
+  - development
+category: React
+---
+
+You can add category pages or tags to your GatsbyJs site in a few different ways.
+But GatsbyJs's magic lies within graphql so let's use the graphql layer to enable
+tag and category pages. For the sake of this post, _tag_ is a many to many,
+_category_ is one to many. A post can have one category, but multiple tags.
+
+---
+
+First, we need to add a category to a post, and multiple tags.
+I have done this via frontmatter, but MDX can also export a metadata object.
+
+```mdx
+---
+title: Any post
+category: Example
+tags:
+  - development
+  - gatsbyjs
+  - reactjs
+---
+
+Example post
+```
+
+_Note, I'm using mdx but a normal markdown file will work_
+
+Next, edit the `gatsby-node.js` file to access the tags and categories.
+
+```js
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  // Destructure the createPage function from the actions object
+  const { createPage } = actions
+
+  // Use the graphql group command to get a list of each tag and category
+  // fieldValue is the tag/category name
+  const { data, errors } = await graphql(`
+    query {
+      categories: allMdx {
+        group(field: frontmatter___category) {
+          fieldValue
+        }
+      }
+      tags: allMdx {
+        group(field: frontmatter___tags) {
+          fieldValue
+        }
+      }
+    }
+  `)
+  if (errors) {
+    reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query')
+  }
+
+  // Loop over every category and create a page for each one
+  const categories = data.categories.group
+  categories.forEach(({ fieldValue }) =>
+    createPage({
+      path: `category/${fieldValue}`.toLowerCase(),
+      component: path.resolve("./src/components/category-layout.js"),
+      context: {
+        category: fieldValue,
+      },
+    })
+  )
+
+  // Same for tags
+  const tags = data.tags.group
+  tags.forEach(({ fieldValue }) =>
+    createPage({
+      path: `tags/${fieldValue}`.toLowerCase(),
+      component: path.resolve("./src/components/tag-layout.js"),
+      context: {
+        tag: fieldValue,
+      },
+    })
+  )
+}
+```
+
+This will create a new page for `category/example`, `tags/development`, `tags/gatsbyjs`
+and `tags/reactjs`. But there's one thing missing, the template for each our two different
+pages.
+
+```js
+import React from "react"
+import { graphql, Link } from "gatsby"
+
+import Layout from "./layout"
+
+const CategoryPage = ({ data, pageContext }) => (
+  <Layout>
+    <h2>{pageContext.category}</h2>
+    <p>
+      There are <b>{data.allMdx.totalCount}</b> posts in the{" "}
+      <b>{pageContext.category}</b> category.
+    </p>
+    {data.allMdx.nodes.map(post => (
+      <Link to={post.fields.slug} key={post.id}>
+        {post.frontmatter.title}
+      </Link>
+    ))}
+  </Layout>
+)
+
+export default CategoryPage
+
+export const pageQuery = graphql`
+  query CategoryPageQuery($category: String) {
+    allMdx(
+      filter: { frontmatter: { category: { eq: $category } } }
+      sort: { fields: frontmatter___date, order: DESC }
+    ) {
+      nodes {
+        frontmatter {
+          title
+        }
+        fields {
+          slug
+        }
+      }
+      totalCount
+    }
+  }
+`
+```
+
+The above is the category page - the tag page version will
+just need a few tweaks to make it work there too.
+
+## Another way
+
+What if you want a count of each tag to appear on the posts?
+I had this on my old blog, but it was implemented fairly shoddily.
+I wouldn't recommend following this advice but I'm not sure how
+you'd do it through graphql alone.
+
+![Counts on my old blog](../assets/tag-count.png)
+
+```jsx
+// Removing tags that aren't on the post
+const tagsWithCount = data.allMdx.group
+  .filter(tag => post.frontmatter.tags.includes(tag.name))
+
+export const pageQuery`
+  allMdx {
+    group(field: frontmatter___tags) {
+      name: fieldValue
+      count: totalCount
+    }
+  }
+`
+```
+
+One of the main cons about this is the graphql data gets sent
+to the client on hydration, which means that if it includes every single
+tag, even ones that aren't needed, then the file will be much bigger than
+needed. You can help this by creating a regex and using a filter on the allMdx above,
+but it doesn't seem like the nicest approach to me.

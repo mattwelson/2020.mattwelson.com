@@ -1,0 +1,58 @@
+---
+title: Making trips.mattwelson.com
+date: 2018-10-09T03:37:41.405Z
+description: >-
+  A brief run down of the motivations behind building a trip website, and how I did it.
+readMore: Take flight
+tags:
+  - fun
+  - travel
+  - development
+category: React
+---
+
+Over the last few weeks (my first commit was made on 25th August)
+I have been working on making a simple travel dairy that I can upload 1-4 photos
+from each location of our upcoming America trip.
+
+Check it out here:
+[trips.mattwelson.com](https://trips.mattwelson.com)
+
+And view the source code:
+[On Github](https://github.com/mattwelson/trips.mattwelson.com)
+
+## Motivation
+
+I was inspired by the following gif, when it was featured on
+[Muzli's weekly interaction roundup](https://medium.muz.li/banking-app-refresh-animation-dashboard-and-more-weekly-interactions-roundup-c79d3679e88d)
+
+![inspiration](https://cdn.dribbble.com/users/631080/screenshots/4974531/discover-cusco.gif)
+
+Something about the idea of having a small gallery for each day of the trip,
+paired with a brief paragraph really resonated with me. I sat down and came up
+with a small list of goals for implementing my own version of this.
+
+## Goals
+
+1. Easy to update. My summary of this goal was "I want to be able to update
+   the site from the line in a Starbucks", never mind the fact that there won't
+   be many Starbucks where we're going!
+2. Flex some CSS skills. I wanted the site to look good.
+3. Include animations right from the start. Normally animations are added
+   as the very last thing, and getting them dialled is is left to the last minute.
+4. I wanted the site to be a surprise for my Mum, which might sound like the easiest
+   goal on the list but I suck at keeping secrets.
+
+## The build
+
+This was the third site I had made with [Netlify CMS](https://www.netlifycms.org/) and
+[Gatsbyjs](https://www.gatsbyjs.org/). I wanted to really
+push what I had learnt on the other two projects (the first of which is this blog, which is due for a tidy up).
+
+Animation! I really enjoyed working with
+[Popmotion's React Pose](https://popmotion.io/pose/).
+I initially started to animate everything with CSS, but the cool
+staggered effect like the menu has just wouldn't have worked.
+The other major issue with CSS animations was differentiating between the
+initial page load, and subsequent ones. Animations that were running on page load
+were really jerky and didn't look very nice.

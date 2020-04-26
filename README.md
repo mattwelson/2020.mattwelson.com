@@ -1,3 +1,17 @@
+# 2020 Matt Welson
+
+The 2020 rebuild of my personal blog and portfolio website.
+
+## Features
+
+- MDX blog posts, which allows for custom components to be used for different markdown elements, and for JSX components to be used directly in posts.
+- Serverless hooks to display my latest instagram posts // TODO
+- Search // TODO
+
+## Based off the GatsbyJs blog starter
+
+See details below
+
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
   <a href="https://www.gatsbyjs.org">
