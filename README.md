@@ -1,6 +1,4 @@
-<p align="right">
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5210ec70-6492-411e-af33-f0f174b3a322/deploy-status)](https://app.netlify.com/sites/compassionate-thompson-840d5a/deploys)
-</p>
 
 # 2020 Matt Welson
 
@@ -10,7 +8,8 @@ The 2020 rebuild of my personal blog and portfolio website.
 
 - MDX blog posts, which allows for custom components to be used for different markdown elements, and for JSX components to be used directly in posts. // TODO
 - Serverless hooks to display my latest instagram posts // TODO
-- Search // TODO
+- Search powered by Algolia? // TODO
+- Contact form powered by Netlify and react-hook-form // TODO
 
 ## Based off the GatsbyJs blog starter
 
