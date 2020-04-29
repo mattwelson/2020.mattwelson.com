@@ -67,4 +67,8 @@ const Layout = ({ location, title, children }) => {
   )
 }
 
+Layout.defaultProps = {
+  location: {},
+}
+
 export default Layout
