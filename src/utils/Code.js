@@ -3,6 +3,7 @@ import Highlight, { defaultProps } from "prism-react-renderer"
 import theme from "prism-react-renderer/themes/vsDark"
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live"
 import styled from "styled-components"
+import "./language-tabs.css"
 
 const Code = ({ codeString, language, ...props }) => {
   if (props["react-live"]) {

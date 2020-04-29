@@ -47,3 +47,10 @@
   background: #ff9800;
   color: white;
 }
+
+/* HACK: Over ride terrible text shadow style */
+
+code[class*="language-"],
+pre[class*="language-"] {
+  text-shadow: none;
+}
