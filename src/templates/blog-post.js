@@ -11,6 +11,7 @@ export default function PageTemplate({
   location,
 }) {
   const siteTitle = site.siteMetadata.title
+  // TODO: implement ToC?
   return (
     <MDXProvider components={components}>
       <Layout title={siteTitle}>
