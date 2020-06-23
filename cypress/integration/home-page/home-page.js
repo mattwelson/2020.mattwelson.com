@@ -6,7 +6,7 @@ describe('My home page', () => {
   /*
    * TODO: make this test work
    */
-  it('Contains copyright year', () => {
-    cy.get('header').findByText(/gatsby/i).should('exist')
+  it('Renders blog posts', () => {
+    cy.get('article header').findByText(/podcast/i).should('exist')
   })
 })
