@@ -1,10 +1,30 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { MDXProvider } from "@mdx-js/react"
 import components from "../utils/components"
+import styled from 'styled-components'
+import tagColors from '../utils/tags'
 
 import Layout from "../components/layout"
+
+const TagGrid = styled.div`
+display: flex;
+justify-items: start;
+grid-gap: 1rem;
+margin-bottom: 2rem;
+`
+
+const Tag = styled.div`
+  background-color: ${({tag}) => tagColors[tag] || tagColors.default};
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin-right: 1rem;
+
+  a {
+    color: white;
+  }
+`
 
 export default function PageTemplate({
   data: { node, site, next, previous, first },
@@ -19,9 +39,15 @@ export default function PageTemplate({
         <MDXRenderer>{node.body}</MDXRenderer>
 
         <h3>Tags</h3>
+        <TagGrid>
         {node.frontmatter.tags.map(tag => (
-          <p key={tag}>{tag}</p>
+          <Tag key={tag} tag={tag}>
+          <Link to={`/tags/${tag}`}>
+          #{tag}
+          </Link>
+          </Tag>
         ))}
+        </TagGrid>
       </Layout>
     </MDXProvider>
   )

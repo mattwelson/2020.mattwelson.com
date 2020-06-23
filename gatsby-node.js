@@ -58,27 +58,27 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     })
   })
 
-  // const categories = data.categories.group
-  // categories.forEach(({ fieldValue }) =>
-  //   createPage({
-  //     path: `category/${fieldValue}`.toLowerCase(),
-  //     component: path.resolve("./src/components/posts/category-layout.js"),
-  //     context: {
-  //       category: fieldValue,
-  //     },
-  //   })
-  // )
+  const categories = data.categories.group
+  categories.forEach(({ fieldValue }) =>
+    createPage({
+      path: `category/${fieldValue}`.toLowerCase(),
+      component: path.resolve("./src/templates/category-page.js"),
+      context: {
+        category: fieldValue,
+      },
+    })
+  )
 
-  // const tags = data.tags.group
-  // tags.forEach(({ fieldValue }) =>
-  //   createPage({
-  //     path: `tags/${fieldValue}`.toLowerCase(),
-  //     component: path.resolve("./src/components/posts/tag-layout.js"),
-  //     context: {
-  //       tag: fieldValue,
-  //     },
-  //   })
-  // )
+  const tags = data.tags.group
+  tags.forEach(({ fieldValue }) =>
+    createPage({
+      path: `tags/${fieldValue}`.toLowerCase(),
+      component: path.resolve("./src/templates/tag-page.js"),
+      context: {
+        tag: fieldValue,
+      },
+    })
+  )
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
