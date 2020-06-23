@@ -7,24 +7,7 @@ import styled from 'styled-components'
 import tagColors from '../utils/tags'
 
 import Layout from "../components/layout"
-
-const TagGrid = styled.div`
-display: flex;
-justify-items: start;
-grid-gap: 1rem;
-margin-bottom: 2rem;
-`
-
-const Tag = styled.div`
-  background-color: ${({tag}) => tagColors[tag] || tagColors.default};
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  margin-right: 1rem;
-
-  a {
-    color: white;
-  }
-`
+import {TagGrid, Tag} from '../styles/tags'
 
 export default function PageTemplate({
   data: { node, site, next, previous, first },

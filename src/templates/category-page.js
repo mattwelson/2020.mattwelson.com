@@ -5,23 +5,7 @@ import tagColors from '../utils/tags'
 import { rhythm } from "../utils/typography"
 
 import Layout from "../components/layout"
-
-const TagContainer = styled.div`
-display: grid;
-place-items: center;
-`
-
-const Tag = styled.div`
-  background-color: ${({tag}) => tagColors[tag] || tagColors.default};
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  margin-right: 1rem;
-  color: white;
-
-  a {
-    color: white;
-  }
-`
+import {Tag, TagContainer} from '../styles/tags'
 
 export default function CategoryPageTemplate({
   data,
