@@ -1,28 +1,25 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
-import styled from 'styled-components'
-import tagColors from '../utils/tags'
+import styled from "styled-components"
+import tagColors from "../utils/tags"
 import { rhythm } from "../utils/typography"
 
 import Layout from "../components/layout"
-import {Tag, TagContainer} from '../styles/tags'
+import { Tag, TagContainer } from "../styles/tags"
 
-export default function CategoryPageTemplate({
-  data,
-  pageContext
-}) {
+export default function CategoryPageTemplate({ data, pageContext }) {
   const siteTitle = data.site.siteMetadata.title
   const categoryCount = data.allMdx.totalCount
   const posts = data.allMdx.edges
   return (
-      <Layout title={siteTitle}>
+    <Layout title={siteTitle}>
       <TagContainer>
         <h2>
-        <Tag tag={pageContext.category}>
-            {pageContext.category}</Tag>
-            </h2></TagContainer>
+          <Tag tag={pageContext.category}>{pageContext.category}</Tag>
+        </h2>
+      </TagContainer>
 
-            <p>Showing {categoryCount} posts</p>
+      <p>Showing {categoryCount} posts</p>
 
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
@@ -50,34 +47,32 @@ export default function CategoryPageTemplate({
           </article>
         )
       })}
-      </Layout>
+    </Layout>
   )
 }
 
 export const pageQuery = graphql`
-  query categoryPageQuery(
-    $category: String
-  ) {
+  query categoryPageQuery($category: String) {
     site {
-        siteMetadata {
-          title
+      siteMetadata {
+        title
+      }
+    }
+    allMdx(filter: { frontmatter: { category: { eq: $category } } }) {
+      edges {
+        node {
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
+          }
         }
       }
-    allMdx(filter: {frontmatter: {category: {eq: $category}}}) {
-          edges {
-              node {
-            excerpt
-            fields {
-              slug
-            }
-            frontmatter {
-              date(formatString: "MMMM DD, YYYY")
-              title
-              description
-            }
-        }
-          }
-          totalCount
-      } 
+      totalCount
+    }
   }
 `

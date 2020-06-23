@@ -3,11 +3,11 @@ import { graphql, Link } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { MDXProvider } from "@mdx-js/react"
 import components from "../utils/components"
-import styled from 'styled-components'
-import tagColors from '../utils/tags'
+import styled from "styled-components"
+import tagColors from "../utils/tags"
 
 import Layout from "../components/layout"
-import {TagGrid, Tag} from '../styles/tags'
+import { TagGrid, Tag } from "../styles/tags"
 
 export default function PageTemplate({
   data: { node, site, next, previous, first },
@@ -23,13 +23,11 @@ export default function PageTemplate({
 
         <h3>Tags</h3>
         <TagGrid>
-        {node.frontmatter.tags.map(tag => (
-          <Tag key={tag} tag={tag}>
-          <Link to={`/tags/${tag}`}>
-          #{tag}
-          </Link>
-          </Tag>
-        ))}
+          {node.frontmatter.tags.map(tag => (
+            <Tag key={tag} tag={tag}>
+              <Link to={`/tags/${tag}`}>#{tag}</Link>
+            </Tag>
+          ))}
         </TagGrid>
       </Layout>
     </MDXProvider>

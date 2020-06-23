@@ -1,28 +1,25 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
-import styled from 'styled-components'
-import tagColors from '../utils/tags'
+import styled from "styled-components"
+import tagColors from "../utils/tags"
 import { rhythm } from "../utils/typography"
 
 import Layout from "../components/layout"
-import {Tag, TagContainer} from '../styles/tags'
+import { Tag, TagContainer } from "../styles/tags"
 
-export default function TagPageTemplate({
-  data,
-  pageContext
-}) {
+export default function TagPageTemplate({ data, pageContext }) {
   const siteTitle = data.site.siteMetadata.title
   const tagCount = data.allMdx.totalCount
   const posts = data.allMdx.edges
   return (
-      <Layout title={siteTitle}>
+    <Layout title={siteTitle}>
       <TagContainer>
         <h2>
-        <Tag tag={pageContext.tag}>
-            #{pageContext.tag}</Tag>
-            </h2></TagContainer>
+          <Tag tag={pageContext.tag}>#{pageContext.tag}</Tag>
+        </h2>
+      </TagContainer>
 
-            <p>Showing {tagCount} posts</p>
+      <p>Showing {tagCount} posts</p>
 
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
@@ -50,34 +47,32 @@ export default function TagPageTemplate({
           </article>
         )
       })}
-      </Layout>
+    </Layout>
   )
 }
 
 export const pageQuery = graphql`
-  query tagPageQuery(
-    $tag: String
-  ) {
+  query tagPageQuery($tag: String) {
     site {
-        siteMetadata {
-          title
+      siteMetadata {
+        title
+      }
+    }
+    allMdx(filter: { frontmatter: { tags: { eq: $tag } } }) {
+      edges {
+        node {
+          excerpt
+          fields {
+            slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
+            description
+          }
         }
       }
-    allMdx(filter: {frontmatter: {tags: {eq: $tag}}}) {
-          edges {
-              node {
-            excerpt
-            fields {
-              slug
-            }
-            frontmatter {
-              date(formatString: "MMMM DD, YYYY")
-              title
-              description
-            }
-        }
-          }
-          totalCount
-      } 
+      totalCount
+    }
   }
 `
