@@ -3,8 +3,6 @@ import { graphql, Link } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import { MDXProvider } from "@mdx-js/react"
 import components from "../utils/components"
-import styled from "styled-components"
-import tagColors from "../utils/tags"
 
 import Layout from "../components/layout"
 import { TagGrid, Tag } from "../styles/tags"

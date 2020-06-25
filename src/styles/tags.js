@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import tagColors from "../utils/tags"
 
 export const TagGrid = styled.div`
   display: flex;
